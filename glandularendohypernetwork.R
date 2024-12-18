@@ -6,12 +6,12 @@ library(tidyverse)
 library(ggplot2)
 library(ggrepel)
 
-endomatrix<-read_csv('/Users/user/Documents/Fallopian tube paper data/glandularendojune.csv')
+endomatrix<-read_csv('/Users/user/Documents/Fallopiantube/R/glandularendojune.csv')
 
 sd.scores<-apply(endomatrix,2,sd)
 endomatrix<-endomatrix[,which(sd.scores>0)]
 
-DEGs<-read_lines ("/Users/user/Documents/Fallopian tube paper data/broadDEGsjun.txt",)
+DEGs<-read_lines ("/Users/user/Documents/Fallopiantube/R/broadDEGsjun.txt",)
 
 endocor<-cor(endomatrix [,na.omit(match(DEGs, colnames(endomatrix)))],
              endomatrix [,-na.omit(match(DEGs, colnames(endomatrix)))])
@@ -42,7 +42,7 @@ table(endo_desired_branch)
 branch3<- data.frame(endo_desired_branch[endo_desired_branch == 3 | endo_desired_branch == 4])
 
 endoHNbranches<-data.frame(endo_desired_branch)
-write.csv(endoHNbranches,"endohypernetworkbranches.csv")
+write.csv(endoHNbranches,"/Users/user/Documents/Fallopiantube/R/glandularhypernetworkbranches.csv")
 
 #calculating row sums for all DEGs 
 rowsum <-rowSums(endobin)
@@ -53,13 +53,10 @@ hist(rowsum)
 rowsumdf <- (data.frame(rowsum = rowsum))
 rowsumdf
 
-setwd("~/Documents/Fallopian_Tube_Paper")
-write.csv(rowsumdf,"~/Documents/Fallopian_Tube_Paper/glandularDEGrowsums.csv")
-
 ggplot(rowsumdf, aes(x=rowsum)) + geom_histogram(bins=60)+ geom_density()
 ggplot(rowsumdf, aes(x=rowsum)) + geom_density( fill ="lightblue", alpha= 0.5)
 
-gwasgenes<-read_lines('/Users/user/Documents/Fallopian tube paper data/broad_gwasgenes.tsv')
+gwasgenes<-read_lines('/Users/user/Documents/Fallopiantube/R/broad_gwasgenes.tsv')
 
 rowsum<- subset(endobin, rownames(endobin) %in% gwasgenes)
 rowsumDEGS <-rowSums(rowsum)
@@ -81,7 +78,7 @@ HNDEGSplotgenes <- HNDEGSplot + geom_text_repel(data = rowsumDEGS, aes(x = rowsu
 
 HNDEGSplotgenes
 
-#annotate with rank rather than P value
+#annotate with rank
 
 rowsumdf$Rank <- rank(rowsumdf$rowsum, ties.method = "average")
 rowsumdf <- rowsumdf[order(rowsumdf$Rank), ]
@@ -97,7 +94,7 @@ rankplot <- HNDEGSplot +
                   nudge_y = 0.0002, force = 1, direction = "y")
 rankplot
 
-write.csv(rowsumrank, '/Users/user/Documents/endoglandularrowsumrank.csv')
+write.csv(rowsumrank, '/Users/user/Documents/Fallopiantube/R/endoglandularrowsumrank.csv')
 
 rowsumsd <-sd(rowsumdf$rowsum)
 rowsummean <- mean(rowsumdf$rowsum)
