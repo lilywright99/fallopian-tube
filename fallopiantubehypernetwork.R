@@ -7,12 +7,12 @@ library(ggplot2)
 library(ggrepel)
 library(ComplexHeatmap)
 
-FT<-read_csv('/Users/user/Documents/Fallopian tube paper data/secretoryFTjune.csv')
+FT<-read_csv('/Users/user/Documents/Fallopiantube/R/secretoryFTjune.csv')
 
 sd.scores<-apply(FT,2,sd)
 FT<-FT[,which(sd.scores>0)]
 
-DEGs<-read_lines ("/Users/user/Documents/Fallopian tube paper data/broadDEGsjun.txt",)
+DEGs<-read_lines ("/Users/user/Documents/Fallopiantube/R/broadDEGsjun.txt",)
 
 cor_data<-cor(FT [,na.omit(match(DEGs, colnames(FT)))],
                  FT [,-na.omit(match(DEGs, colnames(FT)))])
@@ -43,8 +43,7 @@ branch78<-data.frame(desired_branch[desired_branch == 1 | desired_branch == 2])
 
 
 desired_branch<-data.frame(desired_branch)
-write.csv(desired_branch,"FThypernetworkbranches14jun.csv")
-write.csv(desired_branch,"/Users/user/Documents/FThypernetworkbranches14jun.csv")
+write.csv(desired_branch,"/Users/user/Documents/Fallopiantube/R/FThypernetworkbranches.csv")
 
 #calculating row sums for all DEGs 
 rowsum <-rowSums(bin)
@@ -59,7 +58,7 @@ write.csv(rowsumdf,"FTDEGrowsums.csv")
 ggplot(rowsumdf, aes(x=rowsum)) + geom_histogram(bins=60)+ geom_density()
 ggplot(rowsumdf, aes(x=rowsum)) + geom_density( fill ="lightblue", alpha= 0.5)
 
-gwasgenes<-read_lines('/Users/user/Documents/Fallopian tube paper data/broad_gwasgenes.tsv')
+gwasgenes<-read_lines('/Users/user/Documents/Fallopiantube/R/broad_gwasgenes.tsv')
 
 rowsum<- subset(bin, rownames(bin) %in% gwasgenes)
 rowsumDEGS<-rowSums(rowsum)
@@ -97,7 +96,7 @@ rankplot <- HNDEGSplot +
                   nudge_y = 0.0002, force = 1, direction = "y")
 rankplot
 
-write.csv(rowsumrank, '/Users/user/Documents/FTglandularrowsumrank.csv')
+write.csv(rowsumrank, '/Users/user/Documents/Fallopiantube/R/FTrowsumrank.csv')
 
 rowsumsd <-sd(rowsumdf$rowsum)
 rowsummean <- mean(rowsumdf$rowsum)
@@ -108,3 +107,4 @@ rankplot +
   geom_vline(aes(xintercept = rowsummean - rowsumsd), color = "blue", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = rowsummean + 2*rowsumsd), color = "blue", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = rowsummean - 2*rowsumsd), color = "blue", linetype = "dashed", size = 1)
+
