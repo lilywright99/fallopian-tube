@@ -8,8 +8,8 @@ library(ggrepel)
 library(ggdendro)
 library(reshape2)
 
-gwasstats<- read.csv("~/Documents/3NHSbroad_gwasranks.csv", header = TRUE)
-rankedgenes <- read.table("~/Documents/Fallopian_Tube_Paper/Data/rowsumranksplot.csv", sep = ",", header=TRUE)
+gwasstats<- read.csv("~/Documents/Fallopiantube/R/3NHSbroad_gwasranks.csv", header = TRUE)
+rankedgenes <- read.table("~/Documents/Fallopiantube/R/rowsumranksplot.csv", sep = ",", header=TRUE)
 
 gwasstats<- subset(gwasstats, gwasstats$gene %in% c(rankedgenes$fallopian.tube.gene, rankedgenes$luminal.gene, rankedgenes$glandular.gene))
 
