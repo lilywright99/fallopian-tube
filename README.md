@@ -10,6 +10,8 @@ Jupyter notebooks and R scripts for scRNA-seq data analysis.
 
 * Monocle3 and Hypergraph modelling are detailed in R directory
 
+[figure1.pdf](https://github.com/user-attachments/files/22678290/figure1.pdf)
+
 
 <img width="391" alt="Screenshot 2025-04-10 at 14 56 27" src="https://github.com/user-attachments/assets/2937f6b9-d87a-44e4-b3a1-fa1faa6ac683" />
 
